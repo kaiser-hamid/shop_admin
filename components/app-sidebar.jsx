@@ -11,6 +11,7 @@ import {
   Map,
   PieChart,
   Settings2,
+  ShoppingCart,
   SquareTerminal,
   User,
 } from "lucide-react"
@@ -34,92 +35,91 @@ import Link from "next/link"
 
 const menuGroup = [
   {
-    label: "Products",
+    label: "Shop",
     items: [
       {
-        title: "Playground",
+        title: "Sales Management",
+        url: "#",
+        icon: ShoppingCart,
+        isActive: true,
+        items: [
+          {
+            title: "Order List",
+            url: "/orders",
+          },
+          {
+            title: "Coupons",
+            url: "/coupons",
+          },
+          {
+            title: "Customers",
+            url: "/customers",
+          }
+        ],
+      },
+      {
+        title: "Product Management",
+        url: "#",
+        icon: Bot,
+        isActive: true,
+        items: [
+          {
+            title: "Add Product",
+            url: "/products/add",
+          },
+          {
+            title: "Product List",
+            url: "/products",
+          },
+          {
+            title: "Product Attributes",
+            url: "/product-attributes",
+          },
+          {
+            title: "Product Variants",
+            url: "/product-variants",
+          },
+        ],
+      },
+      {
+        title: "Brand & Category",
         url: "#",
         icon: SquareTerminal,
         isActive: true,
         items: [
           {
-            title: "History",
-            url: "#",
+            title: "Add Category",
+            url: "/categories/add",
           },
           {
-            title: "Starred",
-            url: "#",
+            title: "Category List",
+            url: "/categories",
           },
           {
-            title: "Settings",
-            url: "#",
+            title: "Add Brand",
+            url: "/brands/add",
+          },
+          {
+            title: "Brand List",
+            url: "/brands",
           },
         ],
       },
       {
-        title: "Models",
+        title: "Page Management",
         url: "#",
-        icon: Bot,
+        icon: SquareTerminal,
         items: [
           {
-            title: "Genesis",
-            url: "#",
+            title: "Add Page",
+            url: "/pages/add",
           },
           {
-            title: "Explorer",
-            url: "#",
+            title: "Page List",
+            url: "/pages",
           },
-          {
-            title: "Quantum",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Documentation",
-        url: "#",
-        icon: BookOpen,
-        items: [
-          {
-            title: "Introduction",
-            url: "#",
-          },
-          {
-            title: "Get Started",
-            url: "#",
-          },
-          {
-            title: "Tutorials",
-            url: "#",
-          },
-          {
-            title: "Changelog",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Settings",
-        url: "#",
-        icon: Settings2,
-        items: [
-          {
-            title: "General",
-            url: "#",
-          },
-          {
-            title: "Team",
-            url: "#",
-          },
-          {
-            title: "Billing",
-            url: "#",
-          },
-          {
-            title: "Limits",
-            url: "#",
-          },
-        ],
+
+        ]
       },
     ]
   },

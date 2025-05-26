@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }) {
                 <AppSidebar />
                 <SidebarInset>
                     <DashboardHeader />
-                    <div className="flex-1 p-4 pt-0">
+                    <div className="flex-1 p-4 lg:p-6 pt-0">
                         {children}
                     </div>
                 </SidebarInset>

@@ -1,11 +1,10 @@
 "use client"
-import React from "react"
+import React, { useState } from "react"
 import {
-    SortingState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
-    getSortedRowModel,
+    getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table"
 
@@ -18,23 +17,25 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Pagination } from "./pagination";
 
 export function DataTable({ columns, data }) {
-    const [sorting, setSorting] = React.useState([])
-    const [columnFilters, setColumnFilters] = React.useState([])
+    const [globalFilter, setGlobalFilter] = useState("")
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        onColumnFiltersChange: setColumnFilters,
-        onSortingChange: setSorting,
         getFilteredRowModel: getFilteredRowModel(),
-        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
         state: {
-            sorting,
-            columnFilters,
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
+        initialState: {
+            pagination: {
+                pageSize: 30,
+            },
         },
     });
 
@@ -42,17 +43,17 @@ export function DataTable({ columns, data }) {
 
     return (
         <div>
+            {/* Filter */}
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter emails..."
-                    value={table.getColumn("email")?.getFilterValue() ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
-                    }
+                    placeholder="Search categories by name..."
+                    value={globalFilter ?? ""}
+                    onChange={(event) => setGlobalFilter(event.target.value)}
                     className="max-w-sm"
                 />
             </div>
 
+            {/* Table */}
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -97,6 +98,9 @@ export function DataTable({ columns, data }) {
                     </TableBody>
                 </Table>
             </div>
+
+            {/* Pagination */}
+            <Pagination table={table} />
         </div>
     )
 }
