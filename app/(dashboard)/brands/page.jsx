@@ -22,7 +22,7 @@ export default function CategoriesPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: { status, data, message } } = await http.get('categories');
+                const { data: { status, data, message } } = await http.get('brands');
 
                 if (status) {
                     setPageData(data);
@@ -58,13 +58,13 @@ export default function CategoriesPage() {
     return (
         <div className="w-full">
             <div className="flex justify-between items-start">
-                <h1 className="text-2xl text-slate-800 font-semibold mb-6">Category List</h1>
+                <h1 className="text-2xl text-slate-800 font-semibold mb-6">Brand List</h1>
                 <div>
                     <Link
-                        href="/categories/add"
+                        href="/brands/add"
                         className={buttonVariants({ variant: "default", className: "flex items-center gap-x-1" })}
                     >
-                        <PlusIcon className="w-4 h-4" /> Add Category
+                        <PlusIcon className="w-4 h-4" /> Add Brand
                     </Link>
                 </div>
             </div>

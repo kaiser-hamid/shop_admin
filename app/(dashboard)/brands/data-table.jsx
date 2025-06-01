@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input";
 import { PaginationForDataTable } from "@/components/ui/pagination";
+import ReactPaginate from "react-paginate";
 
 export function DataTable({ columns, data }) {
     const [globalFilter, setGlobalFilter] = useState("")
@@ -40,6 +41,9 @@ export function DataTable({ columns, data }) {
     });
 
 
+    const handlePageClick = (event) => {
+        table.setPageIndex(event.selected)
+    }
 
     return (
         <div>
@@ -100,7 +104,26 @@ export function DataTable({ columns, data }) {
             </div>
 
             {/* Pagination */}
-            <PaginationForDataTable table={table} />
+            {/* <PaginationForDataTable table={table} /> */}
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={table.getPageCount()}
+                previousLabel="Previous"
+                renderOnZeroPageCount={null}
+                containerClassName="flex items-center gap-2"
+                pageClassName="flex items-center justify-center"
+                pageLinkClassName="px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground"
+                activeClassName="bg-primary text-primary-foreground"
+                previousClassName="flex items-center justify-center"
+                previousLinkClassName="px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground"
+                nextClassName="flex items-center justify-center"
+                nextLinkClassName="px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground"
+                disabledClassName="opacity-50 cursor-not-allowed"
+                breakClassName="px-3 py-2 text-sm"
+            />
         </div>
     )
 }
