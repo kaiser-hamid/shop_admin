@@ -17,6 +17,7 @@ const formSchema = yup.object({
     name: yup.string().required("Product name is required").max(255, "Product name must be less than 255 characters"),
     brand_id: yup.object().required("Brand is required"),
     categories: yup.array().of(yup.object()).required("At least one category is required").min(1, "At least one category is required"),
+    size: yup.string().nullable(),
 
     galleries: yup.array().of(yup.object().shape({
         path: yup.mixed().required(),

@@ -54,6 +54,24 @@ export default function ProductFormMain({ register, errors, setValue, getValues,
                     )}
                 </div>
 
+                {/* Size Selection */}
+                <div>
+                    <label htmlFor="size" className="text-sm font-medium mb-2">
+                        Size
+                    </label>
+                    <Input
+                        id="size"
+                        type="text"
+                        placeholder="Enter size"
+                        {...register("size")}
+                    />
+                    {errors.size && (
+                        <p className="text-sm text-red-500 mt-1">
+                            {errors.size.message}
+                        </p>
+                    )}
+                </div>
+
                 {/* Brand Selection */}
                 <div>
                     <label htmlFor="brand_id" className="flex items-center gap-0.5 text-sm font-medium mb-2">

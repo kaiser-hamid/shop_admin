@@ -24,7 +24,14 @@ export const columns = [
     {
         accessorKey: "name",
         header: "Name",
-        cell: ({ row }) => <p className="max-w-[320px] font-medium text-zinc-800"><a href={`${frontendUrl}/products/${row.original.slug}`} target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">{row.original.name}</a></p>
+        cell: ({ row }) => (
+            <p className="flex flex-col gap-2 max-w-[320px] font-medium text-zinc-800">
+                <a href={`${frontendUrl}/products/${row.original.slug}`} target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">{row.original.name}</a>
+                {row.original.size && (
+                    <span className="text-xs text-slate-500">Size: {row.original.size}</span>
+                )}
+            </p>
+        )
     },
     {
         accessorKey: "brand",
