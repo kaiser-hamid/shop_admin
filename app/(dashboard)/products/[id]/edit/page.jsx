@@ -9,8 +9,9 @@ import http from "@/lib/http"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import * as yup from "yup"
+import PageLoader from "@/components/layouts/PageLoader"
 
 /* Schema Validation */
 const formSchema = yup.object({
@@ -33,9 +34,8 @@ const formSchema = yup.object({
 
     ingredients: yup.string().nullable(),
     how_to_use: yup.string().nullable(),
-    tags: yup.array().of(yup.object()).nullable(),
     meta_title: yup.string().nullable().max(255, "Meta title must be less than 255 characters"),
-    meta_keywords: yup.array().of(yup.object()).nullable(),
+    meta_keywords: yup.array().nullable(),
     meta_description: yup.string().nullable().max(255, "Meta description must be less than 255 characters"),
 
     featured_image: yup.object().shape({
@@ -46,9 +46,10 @@ const formSchema = yup.object({
     status: yup.string().required("Status is required"),
 });
 
-export default function AddProduct() {
+export default function EditProduct({ params }) {
     const { toast } = useToast();
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
 
     const {
         register,
@@ -60,6 +61,53 @@ export default function AddProduct() {
     } = useForm({
         resolver: yupResolver(formSchema)
     });
+
+    // Fetch product data
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const { data: { status, data: product } } = await http.get(`/products/${params.id}/edit`);
+
+                if (!status) {
+                    toast({
+                        title: "Product not found",
+                        variant: "destructive"
+                    });
+                }
+                // Set form values
+                setValue('name', product.name);
+                setValue('brand_id', product.brand);
+                setValue('categories', product.categories);
+                setValue('size', product.size);
+                setValue('description', product.description);
+                setValue('ingredients', product.ingredients);
+                setValue('how_to_use', product.how_to_use);
+                setValue('tags', product.tags);
+                setValue('meta_title', product.meta_title);
+                setValue('meta_keywords', product.meta_keywords);
+                setValue('meta_description', product.meta_description);
+                setValue('status', product.status);
+
+                // Handle images
+                if (product.featured_image) {
+                    setValue('featured_image', product.featured_image);
+                }
+
+                setValue('galleries', product.galleries);
+
+                setIsLoading(false);
+            } catch (error) {
+                const errMsg = error.response?.data?.message || error.message;
+                toast({
+                    title: errMsg,
+                    variant: "destructive"
+                });
+                router.push('/products');
+            }
+        };
+
+        fetchProduct();
+    }, [params.id, setValue, toast, router]);
 
     const onSubmit = async (data) => {
         try {
@@ -73,17 +121,17 @@ export default function AddProduct() {
             // Append all form fields to FormData
             Object.keys(data).forEach(key => {
                 if (multiFilesItems.includes(key)) {
-
-                    Array.from(data[key] ?? []).forEach(file => {
-                        formData.append('galleries[]', file.path);
+                    Array.from(data[key] ?? []).forEach(({ path }) => {
+                        if (path instanceof File) {
+                            formData.append('galleries[]', path);
+                        } else {
+                            formData.append('galleries_exists[]', path);
+                        }
                     });
-
                 } else if (arrayOfSelectItems.includes(key)) {
-
                     Array.from(data[key] ?? []).forEach(item => {
                         formData.append(`${key}[]`, item.value);
                     });
-
                 } else if (selectItems.includes(key)) {
                     formData.append(key, data[key].value);
                 } else if (filesItems.includes(key)) {
@@ -93,7 +141,9 @@ export default function AddProduct() {
                 }
             });
 
-            const { data: { status, message } } = await http.post('/products', formData, {
+            formData.append('_method', 'PUT');
+
+            const { data: { status, message } } = await http.post(`/products/${params.id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -117,18 +167,22 @@ export default function AddProduct() {
         }
     }
 
+    if (isLoading) {
+        return <PageLoader />
+    }
+
     return (
         <div className="w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex justify-between items-start">
-                    <h1 className="text-2xl text-slate-800 font-semibold mb-6">Add Product</h1>
+                    <h1 className="text-2xl text-slate-800 font-semibold mb-6">Edit Product</h1>
                     <div>
                         <Button
                             type="submit"
                             className="w-[120px]"
                             disabled={isSubmitting}
                         >
-                            {isSubmitting ? <ButtonLoader /> : "Add Product"}
+                            {isSubmitting ? <ButtonLoader /> : "Update Product"}
                         </Button>
                     </div>
                 </div>

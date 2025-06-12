@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import ProductStatusBadge from "@/components/ui/ProductStatusBadge"
 import Image from "next/image"
+import Link from "next/link";
 
 const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL;
 
@@ -52,13 +53,12 @@ export const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => window.location.href = `/products/edit/${row.original.id}`}
+                    <Link
+                        href={`/products/${row.original.id}/edit`}
+                        className="btn btn-outline"
                     >
                         Edit
-                    </Button>
+                    </Link>
                 </div>
             )
         }

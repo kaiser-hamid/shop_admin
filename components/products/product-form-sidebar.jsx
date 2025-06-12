@@ -31,6 +31,7 @@ export default function ProductFormSidebar({ register, errors, setValue, watch }
                     </label>
                     <Select
                         onValueChange={(value) => setValue("status", value)}
+                        value={watch("status")}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder="Select status" />
