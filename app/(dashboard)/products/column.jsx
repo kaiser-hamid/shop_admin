@@ -50,9 +50,16 @@ export const columns = [
     },
     {
         id: "actions",
+        header: "Actions",
         cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-2">
+                    <Link
+                        href={`/products/${row.original.id}/variants`}
+                        className="btn btn-outline"
+                    >
+                        Manage Variants
+                    </Link>
                     <Link
                         href={`/products/${row.original.id}/edit`}
                         className="btn btn-outline"
