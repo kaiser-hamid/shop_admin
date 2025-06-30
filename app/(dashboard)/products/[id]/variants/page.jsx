@@ -124,7 +124,7 @@ export default function ProductVariants() {
                         Quick update stock and price for each variant
                     </p>
                 </div>
-                {product &&
+                {product && variants?.length === 0 &&
                     <AddVariantModal
                         showAddVariant={showAddVariant}
                         setShowAddVariant={setShowAddVariant}

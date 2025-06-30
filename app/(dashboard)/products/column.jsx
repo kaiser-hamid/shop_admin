@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import ProductStatusBadge from "@/components/ui/ProductStatusBadge"
 import Image from "next/image"
 import Link from "next/link";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { MoreVertical } from "lucide-react";
 
 const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL;
 
@@ -54,18 +56,26 @@ export const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-2">
-                    <Link
-                        href={`/products/${row.original.id}/variants`}
-                        className="btn btn-outline"
-                    >
-                        Manage Variants
-                    </Link>
-                    <Link
-                        href={`/products/${row.original.id}/edit`}
-                        className="btn btn-outline"
-                    >
-                        Edit
-                    </Link>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0 rounded-full focus:ring-0 focus:outline-none">
+                                <span className="sr-only">Open menu</span>
+                                <MoreVertical className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                                <Link href={`/products/${row.original.id}/variants`} className="cursor-pointer">
+                                    Manage Variants
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href={`/products/${row.original.id}/edit`} className="cursor-pointer">
+                                    Edit
+                                </Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             )
         }
