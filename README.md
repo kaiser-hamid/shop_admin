@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚙️ E-Commerce Admin Panel
 
-## Getting Started
+A Next.js admin dashboard for managing an eCommerce platform.
+Provides full control over products, categories, stock levels,
+customers, and orders — built with **Shadcn/ui** components and
+Tailwind CSS.
 
-First, run the development server:
+🔗 **Related Repositories**
+- [REST API Backend (Laravel)](https://github.com/kaiser-hamid/shop_api)
+- [Customer Storefront (Next.js)](https://github.com/kaiser-hamid/shop_frontend)
+
+---
+
+## ✨ Features
+
+- Product management — create, edit, delete, image upload
+- Hierarchical category management (3-level nesting)
+- Stock and quantity control
+- Customer listing and management
+- Order management and status tracking
+- Shadcn/ui components for consistent, accessible UI
+- Custom React hooks for reusable data fetching logic
+- Next.js App Router with protected admin routes
+
+---
+
+## 🛠️ Tech Stack
+
+**Framework:** Next.js 14+ (App Router)  
+**Language:** JavaScript  
+**UI Components:** Shadcn/ui  
+**Styling:** Tailwind CSS  
+**Auth:** Laravel Sanctum (via API)  
+
+---
+
+## 🚀 Getting Started
+
+### Requirements
+- Node.js 18+
+- Running instance of [shop_api](https://github.com/kaiser-hamid/shop_api)
+
+### Installation
 
 ```bash
+git clone https://github.com/kaiser-hamid/shop_admin.git
+cd shop_admin
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) to view in browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+app/                  # Next.js App Router pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+├── products/         # Product management pages
 
-## Deploy on Vercel
+├── categories/       # Category management pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+├── customers/        # Customer management pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+└── orders/           # Order management pages
+
+components/           # Reusable UI components
+
+hooks/                # Custom React hooks
+
+lib/                  # API utilities and helpers
+
+---
+
+## 🔮 Planned Improvements
+
+- Dashboard analytics and sales charts
+- Role-based access control (admin/manager)
+- Bulk product import via CSV
+- TypeScript migration
